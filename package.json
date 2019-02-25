@@ -2,7 +2,7 @@
   "name": "my-class",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,10 +11,13 @@
     "url": "git+https://github.com/twesix/my-class.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "twesix",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/twesix/my-class/issues"
   },
-  "homepage": "https://github.com/twesix/my-class#readme"
+  "homepage": "https://github.com/twesix/my-class#readme",
+  "dependencies": {
+    "mongodb": "^3.1.13"
+  }
 }
