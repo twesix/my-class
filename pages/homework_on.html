@@ -11,7 +11,8 @@
 <div id="app" class="container-fluid">
     <br>
     <div class="card bg-light">
-        <img src="img/example.jpg" alt="随堂练习题截图" class="card-img-top">
+        <!-- TODO: 支持不同类型的图片, 需要在加载失败时自动切换图片类型 -->
+        <img src="img/question.jpg" alt="随堂练习题截图" class="card-img-top">
         <div class="card-body">
             <h5 class="card-title">
                 题目描述
@@ -32,7 +33,7 @@
             <input type="file" id="answer_file">
             <br>
             <br>
-            <button type="button" class="btn btn-success">提交</button>
+            <button type="button" class="btn btn-success" @click="submit_image">提交</button>
         </div>
     </div>
     <br>
@@ -123,7 +124,7 @@
         </button>
     </div>
     <hr>
-    <button type="button" class="btn btn-success">下一题</button>
+    <button type="button" class="btn btn-success" @click="submit">提交</button>
 </div>
 
 <script src="https://cdn.bootcss.com/vue/2.6.6/vue.js"></script>
@@ -134,8 +135,84 @@
             el: '#app',
             data:
                 {
+                    id: 0,
+                    seat: 0,
+                    phone: 0,
                     knowledge_point: '1',
                     emotion: 1
+                },
+            mounted:function()
+            {
+                const id = localStorage.getItem('id')
+                const seat = localStorage.getItem('seat')
+                const phone = localStorage.getItem('phone')
+                if(!id || !seat || !phone)
+                {
+                    location.assign('//' + location.host + '/pages/index.html')
+                }
+                else
+                {
+                    this.id = id
+                    this.seat = seat
+                    this.phone = phone
+                }
+            },
+            methods:
+                {
+                    submit: function()
+                    {
+                        const params = new URLSearchParams
+                        (
+                            {
+                                id: this.id,
+                                seat: this.seat,
+                                phone: this.phone,
+                                knowledge_point: this.knowledge_point,
+                                emotion: this.emotion
+                            }
+                        )
+                        const url = '//' + location.host + '/student_submit?' + params.toString()
+                        console.log(url)
+
+                        const xhr = new XMLHttpRequest()
+                        xhr.open('get', url, true)
+                        xhr.onload = () =>
+                        {
+                            if(xhr.status === 200)
+                            {
+                                const data = JSON.parse(xhr.responseText)
+                                console.log(data)
+                                if(data.ok)
+                                {
+                                    alert('提交成功')
+                                }
+                                else
+                                {
+                                    alert('提交失败')
+                                }
+                            }
+                            else
+                            {
+                                alert('网络错误')
+                            }
+                        }
+                        xhr.send()
+                    },
+                    submit_image: function()
+                    {
+                        const file = document.getElementById('answer_file')
+                        if(file.files.length === 0)
+                        {
+                            alert('请选择文件再上传')
+                        }
+                        else
+                        {
+                            setTimeout(function()
+                            {
+                                alert('提交成功')
+                            }, 1000)
+                        }
+                    }
                 }
         }
     )

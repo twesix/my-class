@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/twesix/my-class#readme",
   "dependencies": {
-    "mongodb": "^3.1.13"
+    "express": "^4.16.4",
+    "mongodb": "^3.1.13",
+    "multer": "^1.4.1"
   }
 }

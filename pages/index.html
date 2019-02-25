@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>学生用户</title>
 
-    <link rel="stylesheet" href="../resources/bootstrap.min.css">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div id="app" class="container-fluid">
@@ -35,15 +35,47 @@
             el: '#app',
             data:
                 {
-                    id: '',
-                    seat: '',
-                    phone: ''
+                    id: '00000000',
+                    seat: '250',
+                    phone: '12345678901'
                 },
             methods:
                 {
                     login: function()
                     {
+                        let url = '//' + location.host + '/check_id' + '?'
+                            + 'id=' + this.id
+                        const xhr = new XMLHttpRequest()
+                        xhr.open('get', url, true)
+                        xhr.onload = () =>
+                        {
+                            if(xhr.status === 200)
+                            {
+                                const data = JSON.parse(xhr.responseText)
+                                console.log(data)
+                                if(data.ok)
+                                {
+                                    this.success()
+                                }
+                                else
+                                {
+                                    alert('学号错误')
+                                }
+                            }
+                            else
+                            {
+                                alert('网络错误')
+                            }
+                        }
+                        xhr.send()
                         console.log(this.id + this.seat + this.phone)
+                    },
+                    success: function()
+                    {
+                        localStorage.setItem('id', this.id)
+                        localStorage.setItem('seat', this.seat)
+                        localStorage.setItem('phone', this.phone)
+                        location.assign('//' + location.host + '/pages/homework_on.html')
                     }
                 }
         }

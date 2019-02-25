@@ -1,15 +1,16 @@
 const MongoClient = require('mongodb').MongoClient
-const url = 'mongodb://localhost:27017/my_class'
+const url = 'mongodb://localhost:27017'
 
-const getConnection = async function()
+const getDB = async function()
 {
-    const $db = await MongoClient.connect(url)
-    return $db.student_info
+    return (await MongoClient.connect(url)).db('my-class')
 }
 
-module.exports.getConnection = getConnection
+module.exports.getDB = getDB
 
-(async function()
+;(async function()
 {
-    $db = await getConnection()
+    $db = await getDB()
+    // console.log($db)
+    const res = await $db.collection('test').insertOne({date: new Date()})
 })()
