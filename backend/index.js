@@ -39,6 +39,7 @@ app.get('/check_id',async function(req, res)
     try
     {
         const result = await $db.collection('student_profile').findOne({student_id: parseInt(id)})
+        console.log(id)
         console.log(result)
         if(result === null)
         {
