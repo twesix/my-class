@@ -57,30 +57,13 @@ app.get('/check_id',async function(req, res)
     }
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.get('/set_homepage', function(req, res)
+{
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    console.log(req.query)
+    fs.writeFileSync(path.resolve(__dirname, '../pages/data/homepage.json'), JSON.stringify(req.query))
+    res.json({ok: true})
+})
 
 app.post('/upload_question_image', upload.single('question_image'), function(req, res, next)
 {
@@ -94,21 +77,6 @@ app.post('/upload_question_image', upload.single('question_image'), function(req
     res.json({ok: true})
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.get('/change_question_options', function(req, res)
 {
     console.log(req.query)
@@ -117,7 +85,7 @@ app.get('/change_question_options', function(req, res)
     res.json({ok: true})
 })
 
-app.use('/pages', express.static(path.resolve(__dirname, '../', 'pages')))
+app.use('/', express.static(path.resolve(__dirname, '../', 'pages')))
 
 app.listen(port, function()
 {

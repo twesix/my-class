@@ -34,6 +34,10 @@
         </div>
         <button type="submit" class="btn btn-primary" @click.prevent="change_options">修改</button>
     </form>
+    <hr>
+    <h3>设置登录后显示的页面(是否有课堂作业):</h3>
+    <button type="button" class="btn btn-primary" @click="set_homepage(1)">有课堂作业</button>
+    <button type="button" class="btn btn-primary" @click="set_homepage(0)">无课堂作业</button>
 </div>
 
 <script src="https://cdn.bootcss.com/vue/2.6.6/vue.js"></script>
@@ -82,11 +86,16 @@
                         console.log(formData.get('A'))
 
                         const xhr = new XMLHttpRequest();
-                        let url = '//' + location.host + '/change_question_options' + '?'
-                        + 'A=' + this.A + '&'
-                        + 'B=' + this.B + '&'
-                        + 'C=' + this.C + '&'
-                        + 'D=' + this.D
+                        const param = new URLSearchParams
+                        (
+                            {
+                                A: this.A,
+                                B: this.B,
+                                C: this.C,
+                                D: this.D
+                            }
+                        )
+                        let url = '//' + location.host + '/change_question_options?' + param.toString()
 
                         xhr.open('GET', url, true);
 
@@ -100,6 +109,31 @@
                             else
                             {
                                 alert('修改成功')
+                            }
+                        };
+                        xhr.send();
+                    },
+                    set_homepage: function(page)
+                    {
+                        console.log(page)
+                        const xhr = new XMLHttpRequest();
+                        const param = new URLSearchParams
+                        (
+                            {
+                                page: page
+                            }
+                        )
+                        let url = '//' + location.host + '/set_homepage?' + param.toString()
+                        xhr.open('GET', url, true)
+                        xhr.onload = function ()
+                        {
+                            if (xhr.status !== 200)
+                            {
+                                alert('设置失败');
+                            }
+                            else
+                            {
+                                alert('设置成功')
                             }
                         };
                         xhr.send();
