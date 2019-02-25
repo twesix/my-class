@@ -153,6 +153,9 @@
             el: '#app',
             data:
                 {
+                    id: 0,
+                    seat: 0,
+                    phone: 0,
                     A: '选项A',
                     B: '选项B',
                     C: '选项C',
@@ -163,6 +166,20 @@
                 },
             mounted: function()
             {
+                const id = localStorage.getItem('id')
+                const seat = localStorage.getItem('seat')
+                const phone = localStorage.getItem('phone')
+                if(!id || !seat || !phone)
+                {
+                    location.assign('//' + location.host + '/pages/index.html')
+                }
+                else
+                {
+                    this.id = id
+                    this.seat = seat
+                    this.phone = phone
+                }
+
                 const xhr = new XMLHttpRequest()
 
                 xhr.open('get', 'data/question_options.json', true)
@@ -188,9 +205,17 @@
                 {
                     submit: function()
                     {
-                        const url = '//' + location.host + '/student_submit' + '?'
-                            + 'knowledge_point=' + this.knowledge_point + '&'
-                            + 'emotion=' + this.emotion
+                        const params = new URLSearchParams
+                        (
+                            {
+                                id: this.id,
+                                seat: this.seat,
+                                phone: this.phone,
+                                knowledge_point: this.knowledge_point,
+                                emotion: this.emotion
+                            }
+                        )
+                        const url = '//' + location.host + '/student_submit?' + params.toString()
                         console.log(url)
 
                         const xhr = new XMLHttpRequest()
@@ -216,7 +241,7 @@
                             }
                         }
                         xhr.send()
-                    }
+                    },
                 }
         }
     )
