@@ -12,7 +12,7 @@
     <div class="card bg-light">
         <div class="card-body">
             <h5 class="card-title">
-                刚才老师所讲的知识点包括哪一个?
+                (No. {{Number}}) 刚才老师所讲的知识点包括哪一个?
             </h5>
             <div class="card-text">
                 <div class="form-check">
@@ -160,6 +160,8 @@
                     B: '选项B',
                     C: '选项C',
                     D: '选项D',
+                    Answer: '',
+                    Number: '',
                     question_option: 'A',
                     knowledge_point: '1',
                     emotion: 1,
@@ -192,6 +194,8 @@
                         this.B = data.B
                         this.C = data.C
                         this.D = data.D
+                        this.Answer = data.Answer
+                        this.Number = data.Number
                         console.log(data)
                     }
                     else
@@ -212,9 +216,18 @@
                                 seat: this.seat,
                                 phone: this.phone,
                                 knowledge_point: this.knowledge_point,
-                                emotion: this.emotion
+                                emotion: this.emotion,
+                                Number: this.Number,
                             }
                         )
+                        if(this.question_option.toLowerCase() === this.Answer.toLowerCase())
+                        {
+                            params.append('question', 1)
+                        }
+                        else
+                        {
+                            params.append('question', 0)
+                        }
                         const url = '//' + location.host + '/student_submit?' + params.toString()
                         console.log(url)
 

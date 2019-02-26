@@ -129,7 +129,8 @@
                     seat: 0,
                     phone: 0,
                     knowledge_point: '1',
-                    emotion: 1
+                    emotion: 1,
+                    image: 0,
                 },
             mounted:function()
             {
@@ -158,7 +159,8 @@
                                 seat: this.seat,
                                 phone: this.phone,
                                 knowledge_point: this.knowledge_point,
-                                emotion: this.emotion
+                                emotion: this.emotion,
+                                image: this.image
                             }
                         )
                         const url = '//' + location.host + '/student_submit?' + params.toString()
@@ -197,6 +199,7 @@
                         }
                         else
                         {
+                            this.image = 1
                             setTimeout(function()
                             {
                                 alert('提交成功')

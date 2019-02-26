@@ -14,7 +14,7 @@
     <input type="file" id="file">
     <button type="button" class="btn btn-primary" @click="upload_file">上传</button>
     <hr>
-    <h3>修改题目选项</h3>
+    <h3>修改题目</h3>
     <form method="get" id="question_options">
         <div class="form-group">
             <label for="A">选项A</label>
@@ -31,6 +31,14 @@
         <div class="form-group">
             <label for="D">选项D</label>
             <input type="text" class="form-control" id="D" placeholder="请输入选项D" name="D" v-model="D">
+        </div>
+        <div class="form-group">
+            <label for="Answer">答案选项</label>
+            <input type="text" class="form-control" id="Answer" placeholder="请输入答案选项" name="Answer" v-model="Answer">
+        </div>
+        <div class="form-group">
+            <label for="Number">题目序号</label>
+            <input type="text" class="form-control" id="Number" placeholder="请输入题目序号" name="Number" v-model="Number">
         </div>
         <button type="submit" class="btn btn-primary" @click.prevent="change_options">修改</button>
     </form>
@@ -52,6 +60,8 @@
                     B: '',
                     C: '',
                     D: '',
+                    Answer: '',
+                    Number: ''
                 },
             methods:
                 {
@@ -92,7 +102,9 @@
                                 A: this.A,
                                 B: this.B,
                                 C: this.C,
-                                D: this.D
+                                D: this.D,
+                                Answer: this.Answer,
+                                Number: this.Number
                             }
                         )
                         let url = '//' + location.host + '/change_question_options?' + param.toString()

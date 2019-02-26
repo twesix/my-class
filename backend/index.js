@@ -17,6 +17,8 @@ app.get('/student_submit', async function(req, res)
     res.setHeader('Access-Control-Allow-Origin', '*')
 
     const query = req.query
+    query.date = new Date()
+    console.log(query)
     const $db = await db.getDB()
     try
     {
