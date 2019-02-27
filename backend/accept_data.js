@@ -28,6 +28,16 @@ app.get('/get_all_data', async function(req, res)
     })
 })
 
+app.get('/clear_all_data', async function(req, res)
+{
+    res.setHeader('Access-Control-Allow-Origin', '*')
+
+    const $db = await db.getDB()
+    const result = await $db.collection('student_submit').deleteMany({})
+    console.log(result.result)
+    res.json(result.result)
+})
+
 app.listen(port, function()
 {
     console.log(`app online: http://localhost:${port}`)
