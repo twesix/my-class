@@ -17,8 +17,15 @@ app.get('/student_submit', async function(req, res)
     res.setHeader('Access-Control-Allow-Origin', '*')
 
     const query = req.query
-    query.date = new Date()
+    query.date = (new Date()).toLocaleString('zh-CN')
     console.log(query)
+
+    if(!query.id || !query.seat || !query.phone || !query.knowledge_point
+        || !query.emotion || !query.Number || !query.question)
+    {
+        res.json({ok: false, err: '参数不全'})
+        return
+    }
     const $db = await db.getDB()
     try
     {
