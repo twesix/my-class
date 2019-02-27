@@ -21,7 +21,7 @@ app.get('/student_submit', async function(req, res)
     console.log(query)
 
     if(!query.id || !query.seat || !query.phone || !query.knowledge_point
-        || !query.emotion || !query.Number || !query.question)
+        || !query.emotion)
     {
         res.json({ok: false, err: '参数不全'})
         return
